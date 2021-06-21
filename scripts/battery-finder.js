@@ -289,6 +289,8 @@ class View {
 		const brandSelect = document.getElementById("brand-select");
 
 		brandSelect.innerHTML = View.getOptionsString(Model.getBrandNames());
+		View.drawModelOptions(); // モデルメニューの作成
+
 		brandSelect.addEventListener("change", function() {
 			View.drawModelOptions(); // モデルメニューの作成
 		});
@@ -297,10 +299,7 @@ class View {
 	// プルダウンメニュー項目の配列optionsListを受け取ってoptionタグの文字列を返す
 	static getOptionsString(optionsList) {
 		let optionsString = "";
-		optionsString +=
-		`
-		<option value="non" selected></option>
-		`;
+
 		for (let i = 0; i < optionsList.length; i++) {
 			optionsString +=
 			`
@@ -344,24 +343,15 @@ class View {
 
 	// モデルメニューの作成
 	static drawModelOptions() {
-		// 選択されているブランド名を取得
-		let brandName = document.getElementById("brand-select").value;
-		let modelOptionsString = "";
-
-		if (brandName !== "non") {
-			modelOptionsString += View.getOptionsString(Model.getModelName(brandName.replace(/-/g, " ")));
-		} else { // ブランド名が選択されていない場合
-			modelOptionsString += 
-			`
-			<option value="non" selected>Select your brand.</option>
-			`;
-		}
-
 		const modelSelect = document.getElementById("model-select");
-	
-		modelSelect.innerHTML = modelOptionsString;
+
+		modelSelect.innerHTML = View.getOptionsString(Model.getModelName(document.getElementById("brand-select").value.replace(/-/g, " ")));
+
+		let totalConsumption = Model.getTotalConsumption(); // 消費電力（カメラ＋アクセサリー）を計算
+		View.drawBatteryList(Model.getBatteryList(totalConsumption), totalConsumption); // バッテリーリストの描画
+
 		modelSelect.addEventListener("change", function() {
-			let totalConsumption = Model.getTotalConsumption(); // 消費電力（カメラ＋アクセサリー）を計算
+			totalConsumption = Model.getTotalConsumption(); // 消費電力（カメラ＋アクセサリー）を計算
 			View.drawBatteryList(Model.getBatteryList(totalConsumption), totalConsumption); // バッテリーリストの描画
 		});
 	}
