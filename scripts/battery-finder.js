@@ -200,53 +200,46 @@ class View {
 		innerDiv.classList.add("d-flex", "flex-column", "justify-content-start", "align-items-start", "col-12");
 
 		let step1Div = document.createElement("div");
-		let step1Label = document.createElement("label");
-		let step1Select = document.createElement("select");
-
 		step1Div.classList.add("m-3");
 
+		let step2Div = step1Div.cloneNode(true);
+		let step3Div = step1Div.cloneNode(true);
+		let step4Div = step1Div.cloneNode(true);
+
+		let step1Label = document.createElement("label");
 		step1Label.classList.add("h4", "my-3");
+
+		let step2Label = step1Label.cloneNode(true);
+		let step3Label = step1Label.cloneNode(true);
+
 		step1Label.htmlFor = "brand-select";
 		step1Label.innerHTML = "step1: Select Your Brand";
 
-		step1Select.classList.add("form-control", "col-12");
-		step1Select.setAttribute("id", "brand-select");
-
-		step1Div.append(step1Label);
-		step1Div.append(step1Select);
-		innerDiv.append(step1Div);
-
-		let step2Div = document.createElement("div");
-		let step2Label = document.createElement("label");
-		let step2Select = document.createElement("select");
-
-		step2Div.classList.add("m-3");
-
-		step2Label.classList.add("h4", "my-3");
 		step2Label.htmlFor = "model-select";
 		step2Label.innerHTML = "step2: Select Your Model";
 
-		step2Select.classList.add("form-control", "col-12");
-		step2Select.setAttribute("id", "model-select");
-
-		step2Div.append(step2Label);
-		step2Div.append(step2Select);
-		innerDiv.append(step2Div);
-
-		let step3Div = document.createElement("div");
-		let step3Label = document.createElement("label");
-		let step3InnerDiv = document.createElement("div");
-		let step3Input = document.createElement("input");
-		let step3InputLabel = document.createElement("label");
-
-		step3Div.classList.add("m-3");
-
-		step3Label.classList.add("h4", "my-3");
 		step3Label.htmlFor = "input-accessory-pc";
 		step3Label.innerHTML = "step3: Input Accessory Power Consumption";
 
+		let step4Label = document.createElement("h4");
+		step4Label.classList.add("my-3");
+		step4Label.innerHTML = "step4: Choose Your Battery";
+		
+		let step1Select = document.createElement("select");
+		step1Select.classList.add("form-control", "col-12");
+
+		let step2Select = step1Select.cloneNode(true);
+
+		step1Select.setAttribute("id", "brand-select");
+		step2Select.setAttribute("id", "model-select");
+
+		step1Div.append(step1Label, step1Select);
+		step2Div.append(step2Label, step2Select);
+
+		let step3InnerDiv = document.createElement("div");
 		step3InnerDiv.classList.add("row", "mx-2");
 
+		let step3Input = document.createElement("input");
 		step3Input.classList.add("form-control", "col-3");
 		step3Input.setAttribute("type", "number");
 		step3Input.setAttribute("id", "input-accessory-pc");
@@ -254,31 +247,20 @@ class View {
 		step3Input.setAttribute("max", "100");
 		step3Input.setAttribute("min", "0");
 
+		let step3InputLabel = document.createElement("label");
 		step3InputLabel.classList.add("mx-4", "mt-1", "h4");
 		step3InputLabel.innerHTML = "W";
 
-		step3InnerDiv.append(step3Input);
-		step3InnerDiv.append(step3InputLabel);
-		step3Div.append(step3Label);
-		step3Div.append(step3InnerDiv);
-		innerDiv.append(step3Div);
-
-		let step4Div = document.createElement("div");
-		let step4Label = document.createElement("h4");
+		step3InnerDiv.append(step3Input, step3InputLabel);
+		step3Div.append(step3Label, step3InnerDiv);
+		
 		let step4InnerDiv = document.createElement("div");
-
-		step4Div.classList.add("m-3");
-
-		step4Label.classList.add("my-3");
-		step4Label.innerHTML = "step4: Choose Your Battery";
-
 		step4InnerDiv.classList.add("vw-100", "m-3");
 		step4InnerDiv.setAttribute("id", "battery-list");
 
-		step4Div.append(step4Label);
-		step4Div.append(step4InnerDiv);
-		innerDiv.append(step4Div);
-
+		step4Div.append(step4Label, step4InnerDiv);
+		
+		innerDiv.append(step1Div, step2Div, step3Div, step4Div);
 		targetDiv.append(innerDiv);
 
 		View.getAccessoryPC();
