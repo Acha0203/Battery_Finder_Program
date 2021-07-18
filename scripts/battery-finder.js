@@ -270,7 +270,7 @@ class View {
 	static createBrandMenu() {
 		const brandSelect = document.getElementById("brand-select");
 
-		brandSelect.innerHTML = View.getOptionsString(Model.getBrandNames());
+		brandSelect.innerHTML = View.getOptionsString(Controller.getBrandNames());
 		View.drawModelOptions(); // モデルメニューの作成
 
 		brandSelect.addEventListener("change", function() {
@@ -327,14 +327,14 @@ class View {
 	static drawModelOptions() {
 		const modelSelect = document.getElementById("model-select");
 
-		modelSelect.innerHTML = View.getOptionsString(Model.getModelName(document.getElementById("brand-select").value.replace(/-/g, " ")));
+		modelSelect.innerHTML = View.getOptionsString(Controller.getModelName(document.getElementById("brand-select").value.replace(/-/g, " ")));
 
-		let totalConsumption = Model.getTotalConsumption(); // 消費電力（カメラ＋アクセサリー）を計算
-		View.drawBatteryList(Model.getBatteryList(totalConsumption), totalConsumption); // バッテリーリストの描画
+		let totalConsumption = Controller.getTotalConsumption(); // 消費電力（カメラ＋アクセサリー）を計算
+		View.drawBatteryList(Controller.getBatteryList(totalConsumption), totalConsumption); // バッテリーリストの描画
 
 		modelSelect.addEventListener("change", function() {
-			totalConsumption = Model.getTotalConsumption(); // 消費電力（カメラ＋アクセサリー）を計算
-			View.drawBatteryList(Model.getBatteryList(totalConsumption), totalConsumption); // バッテリーリストの描画
+			totalConsumption = Controller.getTotalConsumption(); // 消費電力（カメラ＋アクセサリー）を計算
+			View.drawBatteryList(Controller.getBatteryList(totalConsumption), totalConsumption); // バッテリーリストの描画
 		});
 	}
 
@@ -342,14 +342,14 @@ class View {
 	static getAccessoryPC() {
 		document.getElementById("input-accessory-pc").addEventListener("input", function() {
 			// 消費電力（カメラ＋アクセサリー）を計算
-			let totalConsumption = Model.getTotalConsumption();
+			let totalConsumption = Controller.getTotalConsumption();
 			// バッテリーリストの描画
-			View.drawBatteryList(Model.getBatteryList(totalConsumption), totalConsumption);
+			View.drawBatteryList(Controller.getBatteryList(totalConsumption), totalConsumption);
 		});
 	}
 }
 
-class Model {
+class Controller {
 	// ブランド名の配列を返す
 	static getBrandNames(){
 		let tempList = [];
